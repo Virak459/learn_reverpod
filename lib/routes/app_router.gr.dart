@@ -11,6 +11,22 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [AIChatScreen]
+class AIChatRoute extends PageRouteInfo<void> {
+  const AIChatRoute({List<PageRouteInfo>? children})
+    : super(AIChatRoute.name, initialChildren: children);
+
+  static const String name = 'AIChatRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AIChatScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [HomeView]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
@@ -22,6 +38,54 @@ class HomeRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const HomeView();
+    },
+  );
+}
+
+/// generated route for
+/// [LoginView]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute({List<PageRouteInfo>? children})
+    : super(LoginRoute.name, initialChildren: children);
+
+  static const String name = 'LoginRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const LoginView();
+    },
+  );
+}
+
+/// generated route for
+/// [ProductView]
+class ProductRoute extends PageRouteInfo<void> {
+  const ProductRoute({List<PageRouteInfo>? children})
+    : super(ProductRoute.name, initialChildren: children);
+
+  static const String name = 'ProductRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProductView();
+    },
+  );
+}
+
+/// generated route for
+/// [RegisterView]
+class RegisterRoute extends PageRouteInfo<void> {
+  const RegisterRoute({List<PageRouteInfo>? children})
+    : super(RegisterRoute.name, initialChildren: children);
+
+  static const String name = 'RegisterRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RegisterView();
     },
   );
 }

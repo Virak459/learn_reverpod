@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:learning_reverpod/features/user/models/user_model.dart';
 import '../viewmodels/user_viewmodel.dart';
 
 class UserWidget extends StatelessWidget {
-  final UserViewModel viewModel;
-  
-  const UserWidget({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  final UserModel viewModel;
+
+  const UserWidget({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('user Widget'),
+    return Column(
+      children: [
+        Center(
+          child: Text(
+            'user Widget $context\n'
+            'id: ${viewModel.id}\n'
+            'name: ${viewModel.name}\n'
+            'email: ${viewModel.email}\n'
+            'emailVerifiedAt: ${viewModel.emailVerifiedAt ?? "Not Verified"}\n'
+            'createdAt: ${viewModel.createdAt}\n'
+            'updatedAt: ${viewModel.updatedAt}\n'
+            'profilePhoto: ${viewModel.profilePhoto ?? "No Photo"}',
+          ),
+        ),
+      ],
     );
   }
 }

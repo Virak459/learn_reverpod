@@ -21,6 +21,9 @@ void main() {
     await tester.pump(); // allow rebuild
 
     // Assert that the env value is displayed
-    expect(find.text('Client URL: http://127.0.0.1:8000/api'), findsOneWidget);
+    expect(
+      find.text('Client URL: http://192.168.10.90:8090/api'),
+      findsOneWidget,
+    );
   });
 }

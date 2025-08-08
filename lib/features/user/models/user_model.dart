@@ -5,19 +5,16 @@ part 'user_model.g.dart';
 
 @freezed
 abstract class UserModel with _$UserModel {
-  const UserModel._(); // Needed for custom methods/getters
-
   const factory UserModel({
-    required String id,
+    required int id,
     required String name,
     required String email,
+    @JsonKey(name: 'email_verified_at') String? emailVerifiedAt,
+    @JsonKey(name: 'created_at') required String createdAt,
+    @JsonKey(name: 'updated_at') required String updatedAt,
+    @JsonKey(name: 'profile_photo') String? profilePhoto,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
-
-  String get initials {
-    final nameValue = (this as _UserModel).name;
-    return nameValue.isEmpty ? '' : nameValue[0].toUpperCase();
-  }
 }
