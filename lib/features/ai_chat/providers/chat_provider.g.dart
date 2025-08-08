@@ -57,7 +57,7 @@ final geminiProvider = AutoDisposeProvider<CustomGeminiProvider>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GeminiRef = AutoDisposeProviderRef<CustomGeminiProvider>;
-String _$ai_localHash() => r'c0ec6ad495c1966a929324e95a94bde040a1ee12';
+String _$ai_localHash() => r'3aba140550a36a06bc6a979adb44883d3a4097dd';
 
 /// See also [ai_local].
 @ProviderFor(ai_local)

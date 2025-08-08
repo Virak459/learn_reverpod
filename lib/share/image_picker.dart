@@ -18,7 +18,7 @@ class ImageUploader extends StatefulWidget {
 class _ImageUploaderState extends State<ImageUploader> {
   XFile? _pickedFile;
   Uint8List? _webImage;
-  bool _isUploading = false;
+  final bool _isUploading = false;
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();

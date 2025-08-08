@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:learning_reverpod/config/secure_storage_service.dart';
 import 'package:learning_reverpod/features/user/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/login_model.dart';
 

@@ -61,8 +61,8 @@ Future<void> addProduct(
   String token,
   XFile? pickedFile,
 ) async {
-  var headers = {'Authorization': 'Bearer $token'};
-  var request = http.MultipartRequest(
+  final headers = {'Authorization': 'Bearer $token'};
+  final request = http.MultipartRequest(
     'POST',
     Uri.parse('http://192.168.10.90:8090/api/products'),
   );
@@ -73,15 +73,15 @@ Future<void> addProduct(
     'supplier_id': product.add_by,
     'add_by': product.add_by,
   });
-  Uint8List? _webImage;
+  Uint8List? webImage;
   if (kIsWeb) {
-    _webImage = await pickedFile!.readAsBytes();
+    webImage = await pickedFile!.readAsBytes();
   }
   if (kIsWeb && pickedFile != null) {
     request.files.add(
       http.MultipartFile.fromBytes(
         'image',
-        _webImage!,
+        webImage!,
         filename: pickedFile.name,
       ),
     );
@@ -91,7 +91,7 @@ Future<void> addProduct(
   }
   request.headers.addAll(headers);
 
-  http.StreamedResponse response = await request.send();
+  final http.StreamedResponse response = await request.send();
 
   if (response.statusCode == 200) {
     print(await response.stream.bytesToString());

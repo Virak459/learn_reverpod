@@ -8,7 +8,7 @@ import '../widgets/home_widget.dart';
 
 @RoutePage()
 class HomeView extends ConsumerWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

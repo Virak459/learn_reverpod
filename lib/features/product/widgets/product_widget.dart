@@ -7,8 +7,7 @@ import '../viewmodels/product_viewmodel.dart';
 class ProductWidget extends StatelessWidget {
   ProductModel viewModel;
   final void Function(ProductModel) onAddProduct;
-  ProductWidget({Key? key, required this.viewModel, required this.onAddProduct})
-    : super(key: key);
+  ProductWidget({super.key, required this.viewModel, required this.onAddProduct});
 
   @override
   Widget build(BuildContext context) {

@@ -13,7 +13,7 @@ import '../widgets/product_widget.dart';
 
 @RoutePage()
 class ProductView extends ConsumerWidget {
-  const ProductView({Key? key}) : super(key: key);
+  const ProductView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

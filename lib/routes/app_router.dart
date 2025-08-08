@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 import 'package:learning_reverpod/features/ai_chat/views/ai_chat_view.dart';
 import 'package:learning_reverpod/features/home/views/home_view.dart';
 import 'package:learning_reverpod/features/login/views/login_view.dart';

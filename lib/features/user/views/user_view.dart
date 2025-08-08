@@ -15,11 +15,11 @@ class UserView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // final asyncUser = ref.watch(userProfileProvider);
     // final userViewModel = ref.watch(userProfileProvider);
-    final call_user = ref.watch(userServiceProvider);
+    final callUser = ref.watch(userServiceProvider);
     // print(userViewModel);
-    final user_after_get = ref.watch(Token_user);
+    final userAfterGet = ref.watch(Token_user);
     final viewModel = LoginViewModel();
-    print("Data after get: ${user_after_get}");
+    print("Data after get: $userAfterGet");
     return Scaffold(
       appBar: AppBar(title: Text('User View${viewModel.currentState}')),
       body: Center(
@@ -27,15 +27,15 @@ class UserView extends HookConsumerWidget {
           children: [
             TextButton(
               onPressed: () {
-                Future<(String, UserModel)> user_called = call_user.login(
+                final Future<(String, UserModel)> userCalled = callUser.login(
                   "kaka@gmail.com",
                   "kaka12345",
                 );
-                user_called.then((value) {
+                userCalled.then((value) {
                   print("usered is : ${value.$2.name}\n");
                 });
               },
-              child: Text("Call User ${user_after_get}"),
+              child: Text("Call User $userAfterGet"),
             ),
           ],
         ),

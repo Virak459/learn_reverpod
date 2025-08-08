@@ -5,8 +5,7 @@ import '../viewmodels/register_viewmodel.dart';
 class RegisterWidget extends StatelessWidget {
   final RegisterViewModel viewModel;
   final void Function(RegisterModel) onRegister;
-  RegisterWidget({Key? key, required this.viewModel, required this.onRegister})
-    : super(key: key);
+  const RegisterWidget({super.key, required this.viewModel, required this.onRegister});
 
   @override
   Widget build(BuildContext context) {

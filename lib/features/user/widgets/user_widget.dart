@@ -5,7 +5,7 @@ import '../viewmodels/user_viewmodel.dart';
 class UserWidget extends StatelessWidget {
   final UserModel viewModel;
 
-  const UserWidget({Key? key, required this.viewModel}) : super(key: key);
+  const UserWidget({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {

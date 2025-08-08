@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:learning_reverpod/config/secure_storage_service.dart';
 import '../models/user_model.dart';
 
 final userServiceProvider = Provider<UserService>((ref) => UserService());

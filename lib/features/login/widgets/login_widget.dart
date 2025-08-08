@@ -6,7 +6,7 @@ import '../viewmodels/login_viewmodel.dart';
 class LoginWidget extends StatelessWidget {
   final LoginViewModel viewModel;
 
-  const LoginWidget({Key? key, required this.viewModel}) : super(key: key);
+  const LoginWidget({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +26,13 @@ class LoginWidget extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               try {
-                var user = await viewModel.login();
+                final user = await viewModel.login();
 
                 context.router.replace(HomeRoute()); // Navigate to home screen
                 // Navigate to home screen
               } catch (e) {
                 print('Login failed: $e');
-                var snackbar = SnackBar(
+                final snackbar = SnackBar(
                   content: Text('Login failed pelase try again'),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackbar);

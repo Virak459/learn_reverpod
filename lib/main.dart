@@ -1,152 +1,158 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:learning_reverpod/routes/app_router.dart';
+
+final _appRouter = AppRouter();
+
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+  runApp(ProviderScope(child: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      routerConfig: _appRouter.config(),
+      title: 'AutoRoute Demo',
+      // theme: ThemeData.dark(),
+    );
+  }
+}
+// import 'dart:io';
+
 // import 'package:flutter/material.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:learning_reverpod/routes/app_router.dart';
+// import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-// final _appRouter = AppRouter();
-
-// Future<void> main() async {
-//   await dotenv.load(fileName: ".env");
-//   runApp(ProviderScope(child: MyApp()));
+// void main() {
+//   runApp(ChatApp());
 // }
 
-// class MyApp extends StatelessWidget {
+// class ChatApp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
-//     return MaterialApp.router(
-//       debugShowCheckedModeBanner: false,
-//       routerConfig: _appRouter.config(),
-//       title: 'AutoRoute Demo',
+//     return MaterialApp(
+//       title: 'Laravel Reverb Chat',
 //       theme: ThemeData.dark(),
+//       home: ChatPage(),
 //     );
 //   }
 // }
-import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+// class ChatPage extends StatefulWidget {
+//   @override
+//   State<ChatPage> createState() => _ChatPageState();
+// }
 
-void main() {
-  runApp(ChatApp());
-}
+// class _ChatPageState extends State<ChatPage> {
+//   late IO.Socket socket;
+//   final TextEditingController _messageController = TextEditingController();
+//   final List<String> messages = [];
 
-class ChatApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Laravel Reverb Chat',
-      theme: ThemeData.dark(),
-      home: ChatPage(),
-    );
-  }
-}
+//   @override
+//   void initState() {
+//     super.initState();
+//     initSocket();
+//     connect();
+//   }
 
-class ChatPage extends StatefulWidget {
-  @override
-  State<ChatPage> createState() => _ChatPageState();
-}
+//   void connect() async {
+//     try {
+//       final socket = await WebSocket.connect('ws://192.168.10.90:6001');
 
-class _ChatPageState extends State<ChatPage> {
-  late IO.Socket socket;
-  final TextEditingController _messageController = TextEditingController();
-  final List<String> messages = [];
+//       socket.listen((data) {
+//         print('Received: $data');
+//       });
 
-  @override
-  void initState() {
-    super.initState();
-    initSocket();
-    connect();
-  }
+//       socket.add('Hello server!');
+//     } catch (e) {
+//       print('Error: $e');
+//     }
+//   }
 
-  void connect() async {
-    try {
-      final socket = await WebSocket.connect('ws://192.168.10.90:6001');
+//   void initSocket() {
+//     socket = IO.io('http://192.168.10.90:6001', <String, dynamic>{
+//       'transports': ['websocket'],
+//       'autoConnect': true,
+//       'forceNew': true,
+//     });
 
-      socket.listen((data) {
-        print('Received: $data');
-      });
+//     socket.onConnect((_) {
+//       print('Connected!');
+//     });
 
-      socket.add('Hello server!');
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
+//     socket.onConnectError((data) {
+//       print('Connect Error: $data');
+//     });
 
-  void initSocket() {
-    socket = IO.io('http://192.168.10.90:6001', <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': true,
-      'forceNew': true,
-    });
+//     socket.onError((data) {
+//       print('Error: $data');
+//     });
 
-    socket.onConnect((_) {
-      print('Connected!');
-    });
+//     socket.onDisconnect((_) {
+//       print('Disconnected');
+//     });
+//   }
 
-    socket.onConnectError((data) {
-      print('Connect Error: $data');
-    });
+//   void sendMessage() {
+//     final message = _messageController.text.trim();
+//     if (message.isEmpty) return;
 
-    socket.onError((data) {
-      print('Error: $data');
-    });
+//     // Send message via your Laravel API (not WebSocket directly)
+//     // Placeholder: Simulate message send
+//     print('✉️ Sending message: $message');
+//     connect();
+//     _messageController.clear();
 
-    socket.onDisconnect((_) {
-      print('Disconnected');
-    });
-  }
+//     // You’d usually call your Laravel API here with `http.post(...)`
+//   }
 
-  void sendMessage() {
-    final message = _messageController.text.trim();
-    if (message.isEmpty) return;
+//   @override
+//   void dispose() {
+//     socket.dispose();
+//     _messageController.dispose();
+//     super.dispose();
+//   }
 
-    // Send message via your Laravel API (not WebSocket directly)
-    // Placeholder: Simulate message send
-    print('✉️ Sending message: $message');
-    connect();
-    _messageController.clear();
-
-    // You’d usually call your Laravel API here with `http.post(...)`
-  }
-
-  @override
-  void dispose() {
-    socket.dispose();
-    _messageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Real-Time Chat')),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(12),
-              itemCount: messages.length,
-              itemBuilder: (context, index) =>
-                  ListTile(title: Text(messages[index])),
-            ),
-          ),
-          Divider(height: 1),
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: InputDecoration(hintText: 'Type a message...'),
-                  ),
-                ),
-                IconButton(icon: Icon(Icons.send), onPressed: sendMessage),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Real-Time Chat')),
+//       body: Column(
+//         children: [
+//           Expanded(
+//             child: ListView.builder(
+//               padding: EdgeInsets.all(12),
+//               itemCount: messages.length,
+//               itemBuilder: (context, index) =>
+//                   ListTile(title: Text(messages[index])),
+//             ),
+//           ),
+//           Divider(height: 1),
+//           Padding(
+//             padding: EdgeInsets.all(8),
+//             child: Row(
+//               children: [
+//                 Expanded(
+//                   child: TextField(
+//                     controller: _messageController,
+//                     decoration: InputDecoration(hintText: 'Type a message...'),
+//                   ),
+//                 ),
+//                 IconButton(icon: Icon(Icons.send), onPressed: sendMessage),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

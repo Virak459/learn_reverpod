@@ -47,23 +47,23 @@ class RegisterViewModel extends StateNotifier<RegisterModel> {
 
 @riverpod
 Future<UserModel> register(RegisterRef ref, RegisterModel registerModel) async {
-  var headers = {
+  final headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   };
-  var request = http.Request(
+  final request = http.Request(
     'POST',
     Uri.parse('http://192.168.10.90:8090/api/register'),
   );
   request.body = json.encode({
-    "name": "${registerModel.email.toString().split('@')[0].toString()}",
-    "email": "${registerModel.email}",
-    "password": "${registerModel.password}",
-    "password_confirmation": "${registerModel.confirmPassword}",
+    "name": registerModel.email.toString().split('@')[0].toString(),
+    "email": registerModel.email,
+    "password": registerModel.password,
+    "password_confirmation": registerModel.confirmPassword,
   });
   request.headers.addAll(headers);
 
-  http.StreamedResponse response = await request.send();
+  final http.StreamedResponse response = await request.send();
 
   if (response.statusCode == 200) {
     final responseBody = await response.stream.bytesToString();

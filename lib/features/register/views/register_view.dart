@@ -8,7 +8,7 @@ import '../widgets/register_widget.dart';
 
 @RoutePage()
 class RegisterView extends ConsumerWidget {
-  const RegisterView({Key? key}) : super(key: key);
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +27,7 @@ class RegisterView extends ConsumerWidget {
                 viewModel: viewModel,
                 onRegister: (model) async {
                   try {
-                    final user = await ref.read(registerProvider(model));
+                    final user = ref.read(registerProvider(model));
                     print("User registered: ${model.email}");
                     context.router.replace(LoginRoute()); // Navigate to login
                   } catch (e) {

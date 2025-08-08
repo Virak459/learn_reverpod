@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:learning_reverpod/features/ai_chat/providers/CustomLLMProvider.dart';
 import '../models/chat_session.dart';
-import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -80,10 +80,7 @@ CustomLLMProvider ai_local(Ref ref) {
   return CustomLLMProvider(
     onComplete: (history) {
       logger.d('saving session');
-      // ref.read(chatBoxProvider.future).then((value) => value.put(
-      //     selectedSession.id,
-      //     jsonEncode(selectedSession.copyWith(history: history).toJson())));
-      // ref.invalidate(localChatSessionsProvider);
+      // Save logic here
     },
   )..history = selectedSession.history;
 }

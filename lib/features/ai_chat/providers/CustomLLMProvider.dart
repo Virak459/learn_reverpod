@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
@@ -11,6 +12,7 @@ class CustomLLMProvider extends LlmProvider with ChangeNotifier {
 
   CustomLLMProvider({void Function(Iterable<ChatMessage>)? onComplete})
       : _onComplete = onComplete;
+
   final String _apiUrl = '${dotenv.env['LLM_API']}';
 
   @override
@@ -20,30 +22,45 @@ class CustomLLMProvider extends LlmProvider with ChangeNotifier {
     final llmMessage = ChatMessage.llm();
     _history.addAll([userMessage, llmMessage]);
 
-    // try {
-    final response = await http.post(
-      Uri.parse(_apiUrl),
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({'prompt': prompt}),
+    final headers = {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+    };
+
+    final request = http.Request(
+      'POST',
+      Uri.parse("${dotenv.env['LLM_API']}"),
     );
+    request.body = json.encode({"prompt": prompt});
+    request.headers.addAll(headers);
 
-    if (response.statusCode == 200) {
-      final text = response.body.trim();
-      llmMessage.append(text);
-      yield text;
+    try {
+      final response = await request.send();
 
-      _onComplete?.call(_history);
+      // ✅ Read the stream only ONCE
+      final responseText = await response.stream.bytesToString();
+      print("Response 1 : $responseText");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // ✅ Handle the response
+        llmMessage.append(responseText);
+        yield responseText;
+
+        _onComplete?.call(_history);
+        notifyListeners();
+      } else {
+        final errorMsg = '❌ Error: ${response.statusCode}';
+        llmMessage.append(errorMsg);
+        notifyListeners();
+        yield errorMsg;
+      }
+    } catch (e) {
+      print("Parsing or stream error: $e");
+      llmMessage.append('❌ Exception: $e');
       notifyListeners();
-    } else {
-      yield '❌ Error ${response.statusCode}';
+      yield '❌ Exception: $e';
+      throw LlmFailureException("Response parse failed");
     }
-    // } catch (e) {
-    //   print("Error 2 $e   kooko");
-    //   yield '❌ Exception: $e';
-    // }
   }
 
   @override
@@ -61,5 +78,15 @@ class CustomLLMProvider extends LlmProvider with ChangeNotifier {
       ..clear()
       ..addAll(history);
     notifyListeners();
+  }
+
+  String extractBase64(String response) {
+    final regex = RegExp(r'data:image\/png;base64,([A-Za-z0-9+/=]+)');
+    final match = regex.firstMatch(response);
+    return match != null ? match.group(1)! : '';
+  }
+
+  Uint8List base64ToImage(String base64String) {
+    return base64Decode(base64String);
   }
 }
